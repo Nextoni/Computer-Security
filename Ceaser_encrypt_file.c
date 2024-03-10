@@ -80,28 +80,59 @@ int read_cypher(char* filename, char* cypher)
     return EXIT_SUCCESS;
 }
 
+
+int write_cypher(char* filename)
+{
+    FILE *file;
+    
+    file = fopen(filename, "w");
+    
+    char sentence[1000];
+    printf("Enter sentence: \n");
+    scanf("%s", sentence);
+    
+    fprintf(file, "%s", sentence);
+    
+    fclose(file);
+    
+    return EXIT_SUCCESS;
+}
+
+
 int main() {
     char filename[MAXN];
     printf("Enter filename: \n");
     scanf("%s", filename);
     
+    char option[MAXN];
+    printf("Choose read or write: \n");
+    scanf("%s", option);
+    
+    if(option == "read"){
+        printf("%s", "we are reading");
 
-    char cypher[MAXN];
+        char cypher[MAXN];
 
-    if( read_cypher(filename, cypher) == EXIT_SUCCESS)
-    {
-        int key;
-        printf("Enter key:");
-        scanf("%d", &key);
-        
-        char* result = caesar_encrypt(cypher, key);
-        
-        printf("%s", result);
-        
-        return EXIT_SUCCESS;
+        if( read_cypher(filename, cypher) == EXIT_SUCCESS)
+        {
+            int key;
+            printf("Enter key:");
+            scanf("%d", &key);
+            
+            char* result = caesar_encrypt(cypher, key);
+            
+            printf("%s", result);
+            
+            return EXIT_SUCCESS;
+        }
+        else
+        {
+            return EXIT_FAILURE;
+        }
     }
-    else
-    {
-        return EXIT_FAILURE;
+    
+    else if(option == "write"){
+        write_cypher(filename);
     }
+    
 }
