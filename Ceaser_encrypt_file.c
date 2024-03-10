@@ -83,13 +83,18 @@ int read_cypher(char* filename, char* cypher)
 
 int write_cypher(char* filename)
 {
-    FILE *file;
+    FILE* file = fopen(filename, "w");
     
-    file = fopen(filename, "w");
+    if(file == NULL){
+      printf("Error opening the file.");
+      return EXIT_FAILURE;
+    }
+    
+    getchar();
     
     char sentence[1000];
     printf("Enter sentence: \n");
-    scanf("%s", sentence);
+    fgets(sentence, sizeof(sentence), stdin);
     
     fprintf(file, "%s", sentence);
     
@@ -108,8 +113,7 @@ int main() {
     printf("Choose read or write: \n");
     scanf("%s", option);
     
-    if(option == "read"){
-        printf("%s", "we are reading");
+    if(strcmp(option, "read") == 0){
 
         char cypher[MAXN];
 
@@ -131,7 +135,7 @@ int main() {
         }
     }
     
-    else if(option == "write"){
+    else if(strcmp(option, "write") == 0){
         write_cypher(filename);
     }
     
